@@ -79,14 +79,21 @@ include "{{ file }}";
 
 {% if bind_zone_domains is defined %}
 {% for bind_zone in bind_zone_domains %}
-zone "{{ bind_zone.name }}" IN {
-  type slave;
-  masters { {{ bind_zone_master_server_ip }}; };
-  file "slaves/{{ bind_zone.name }}";
-{% if bind_zone.delegate is defined %}
-  forwarders {};
+{% if 'view' in bind_zone %}
+view "{{ bind_zone.view.name }}" {
+  match-clients { {{ bind_zone.view.acls | join('; ') | append(';') }} };
 {% endif %}
+  zone "{{ bind_zone.name }}" IN {
+    type slave;
+    masters { {{ bind_zone_master_server_ip }}; };
+    file "slaves/{{ bind_zone.name }}";
+  {% if bind_zone.delegate is defined %}
+    forwarders {};
+  {% endif %}
+  };
+{% if 'view' in bind_zone %}
 };
+{% endif %}
 
 {% if bind_zone.networks is defined %}
 {% for network in bind_zone.networks %}

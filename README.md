@@ -72,6 +72,7 @@ Variables are not required, unless specified.
 | `bind_zone_time_to_refresh`  | `1D`                 | Time to refresh field in the SOA record.                                                                                     |
 | `bind_zone_time_to_retry`    | `1H`                 | Time to retry field in the SOA record.                                                                                       |
 | `bind_zone_ttl`              | `1W`                 | Time to Live field in the SOA record.                                                                                        |
+| `bind_views`          |      | `[]`                 | A list of views to configure
 
 † Best practice for an authoritative name server is to leave recursion turned off. However, [for some cases](http://www.zytrax.com/books/dns/ch7/queries.html#allow-query-cache) it may be necessary to have recursion turned on.
 
